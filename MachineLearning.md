@@ -126,9 +126,62 @@ Utilizar el método de R-squared no es demasiado efectivo a la hora de generaliz
 
 Para evitar esto, echamos mano de cross validation, que realiza la operación varias veces (las que le indiquemos en cv) y nos otorga tantos resultados como cifra hayamos fijado. De ahí, sacamos la media y obtenemos un resultado mucho más preciso.
 
+        reg = LinearRegression()
+
+
+        cv_scores = cross_val_score(reg, característica, target, cv=5)
+
+
 #### 2.2.2 Regularización
 Muchas veces podemos caer en el error de contar con un modelo sobrenetrenado (overfitting) o infraentrenado. Esto se debe a que no se las características suficientes para producir una predicción eficaz. Esto significa un fallo de nuestro modelo al generalizar -encajar- el conocimiento que pretendemos que adquieran.
 
 - Overfitting: Aportar datos demasiado particulares a un modelo, de tal forma que no es capaz de generalizar cuando llega un dato mínimamente diferente. Por ejemplo, entrenamos al modelo con muestras de 10 perros de color marrón. Despúes, aportamos un perro de color blanco. Ante la pregunta de si estamos ante un perro, la respuesta es negativa puesto que esta muestra se sale del patrón de las que tenemos.
 
 - Underfitting: Le damos una única muestra (un perro marrón) y le preguntamos si una nueva muestra (un perro blanco) cumple con los requisitos. Lógicamente, la respuesta será no y el motivo es que no contamos con las muestras suficientes para entrenar a nuestro modelo.
+
+Existen dos metodologías de regularización importantes:
+- Ridge: utilizamos una función OLS (Ordinary Least Squares) para para ajustar los datos (fit) a una función multiplicada por un coeficiente alfa. 
+
+        alfa · sumatorio de la caracterísitca al cuadrado.
+
+    siendo alfa el parámetro que controla la complejidad del sistema.
+    
+    Un alfa demasiado alto puede conllevar a overfitting y uno muy bajo a underfitting.
+
+        ridge = Ridge(alfa = 0.1, normalize=True)
+
+
+- Lasso: Similar, solo que el producto es alfa · el sumatorio de los varlores absolutos de la característica.
+
+        lasso = Lasso(alpha=0.1, normalize=True)
+
+        lasso.fit(X,y)
+
+        lasso_coef = lasso.fit(X,y).coef_
+
+        con X siendo la característica elegida e y el target
+
+<br>
+
+## 2.3 Cuánto de bueno es nuestro modelo
+
+Dentro de la Clasificación, (2.1), podemos utilizar otras métricas además de a precisión (accuracy, el porcentaje de muestras correctamente detectadas).
+Ejemplo de los emails de spam. Se necesitan otras metodologías más efectivas. Para ello, necesitamos comprender las variantes involucradas.
+
+- Verdaderos Positivos (TP), el modelo lo clasifica como positivo y es positivo.
+- Verdaderos Negativos (TN), el modelo lo clasifica como negativo y es negativo.
+- Falsos Positivos (FP) o Error tipo I, el modelo lo clasifica como positivo y es negativo.
+- Falsos Negativos (FN) o Error de tipo II, el modelo lo clasifica como negativo y es positivo.
+
+Sabiendo esto, procedemos a comprender cuáles son las diferentes cla
+1. Precisión (“Accuracy”): el porcentaje de aciertos totales
+        
+        A = TP + TN / TP + FP + TN + FN
+
+2. Exactitud ( “Precision”): el porcentaje de predicciones positivas que son acertadas
+
+        P= TP / TP + FP
+
+3. Exhaustividad (“Recall”): el porcentaje de valores positivos que identificados por en la predicción
+
+        R= TP / TP + FN
