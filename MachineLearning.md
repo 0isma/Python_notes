@@ -8,7 +8,7 @@ El primero de los casos corresponde a aprendizaje supervisado, y el segundo no.
 
 El último consiste en descubrir patrones ocultos a partir de datos sin etiquetar.
 
-# 1.1 Worokflow
+# 1.1 Workflow
 1. Extraer las características (features).
 2. Separar el dataset a dataset de entrenamiento y dataset de test.
 3. El dataset de entramiento debe ser entrenado: entrenar el modelo.
