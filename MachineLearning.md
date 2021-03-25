@@ -92,6 +92,8 @@ Las características (features) deben ser continuas y no pueden haber lagunas de
 Hay funciones interesantes para separar training y test data. 
     train_test_split
 
+    .score calcula la precisión
+
 ## 2.2 SL Regresión
 En este caso los valores qus buscamos son continuos. Debemos operar con arrays de tipo numpy (hay métodos para pasar). 
 
@@ -168,12 +170,12 @@ Existen dos metodologías de regularización importantes:
 Dentro de la Clasificación, (2.1), podemos utilizar otras métricas además de a precisión (accuracy, el porcentaje de muestras correctamente detectadas).
 Ejemplo de los emails de spam. Se necesitan otras metodologías más efectivas. Para ello, necesitamos comprender las variantes involucradas.
 
-- Verdaderos Positivos (TP), el modelo lo clasifica como positivo y es positivo.
-- Verdaderos Negativos (TN), el modelo lo clasifica como negativo y es negativo.
-- Falsos Positivos (FP) o Error tipo I, el modelo lo clasifica como positivo y es negativo.
-- Falsos Negativos (FN) o Error de tipo II, el modelo lo clasifica como negativo y es positivo.
+- Verdaderos Positivos (TP): el modelo lo clasifica como positivo y es positivo.
+- Verdaderos Negativos (TN): el modelo lo clasifica como negativo y es negativo.
+- Falsos Positivos (FP): el modelo lo clasifica como positivo y es negativo.
+- Falsos Negativos (FN): el modelo lo clasifica como negativo y es positivo.
 
-Sabiendo esto, procedemos a comprender cuáles son las diferentes cla
+Sabiendo esto, procedemos a comprender cuáles son las diferentes métricas que podemos utilizar para llevar a cabo 
 1. Precisión (“Accuracy”): el porcentaje de aciertos totales
         
         A = TP + TN / TP + FP + TN + FN
@@ -185,3 +187,45 @@ Sabiendo esto, procedemos a comprender cuáles son las diferentes cla
 3. Exhaustividad (“Recall”): el porcentaje de valores positivos que identificados por en la predicción
 
         R= TP / TP + FN
+<br>
+
+### 2.3.1 Regresión Logística
+
+Se utiliza en el ámbito de clasificación y se emplea para mostrar probabilidades. Solo asigna los valores 0 y 1.
+- Si el valor p es superior a 0'5, se asgina el valor 1.
+- En caso contrario, se asigna un 0.
+
+El umbral se suele fijar en 0,5 porque está en el centro, pero éste puede variar.
+
+- Si se pone a 0, todos slos valores serán 1 (el ratio de TP es el mismo que el de FP, es decir, 1).
+- Si se pone a 1, todos los valores serán 0 (el ratio de TP es el mismo que el de FP, es decir, 0).
+
+La variación de los puntos que probamos para conseguir todos los umbrales posibles, se llama curva **ROC** (Reciever Operating Characteristic curve).
+
+Una **curva ROC** (curva de característica operativa del recepto) es un gráfico que muestra el rendimiento de un modelo de clasificación en todos los umbrales de clasificación. Esta curva representa dos parámetros:
+
+- Tasa de verdaderos positivos (Exhaustividad)
+- Tasa de falsos positivos (FP / FP + TP)
+
+Los informes de clasificación y las matrices de confusión son excelentes métodos para evaluar cuantitativamente el rendimiento de los modelos, mientras que las curvas ROC proporcionan una forma de evaluar visualmente los modelos.
+
+Una curva ROC representa TPR frente a FPR.
+
+### 2.3.2 AUC
+
+Dada un curva ROC, debemos buscar la métrica que más nos interese.
+
+Para evaluar un modelo de regresión logística es ineficiente utilizar umbrales, por lo que se echa mano del algoritmo AUC (Area Under ROC Curve).
+
+### 2.3.3 Hyperparameter tuning
+
+Este tipo de parámetros se utilizan para evitar el over y underfittin (como alfa en Ridge y Lasso, o n en KNN vecinos).
+
+Se trata de un parámetro que no puede ser elegido antes de predecir el modelo y debe tener un valor correcto. Para ello, se deben probar varios valores, ajustarlos de forma separa y observar el rendimiento para quedarnos con el que mejor funcione. 
+- Utilizar la validación cruzada es esencial (cross validation).
+
+
+
+### 2.3.4 Evaluación final
+
+Es importante utilizar los datos de entrenamiento para poder llevar a cabo la cross validation. Si utilizo todos los datos de los que dispongo, no sería efectivo, puesto que estamos evaluando un modelo con datos que previamente ha visto.
