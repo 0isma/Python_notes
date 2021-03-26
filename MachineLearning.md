@@ -299,3 +299,115 @@ Podemos dividir este error entres partes.
 El sesgo y la varianza son indirectamente proporcionales: cuando sube el otro baja. Hay que buscar el punto perfecto.
 
 La solución para evitar estos errores: cross-site validation (validación cruzada)
+
+
+### 2.3.1 Regresión Logística
+
+Se utiliza en el ámbito de clasificación y se emplea para mostrar probabilidades. Solo asigna los valores 0 y 1.
+- Si el valor p es superior a 0'5, se asgina el valor 1.
+- En caso contrario, se asigna un 0.
+
+El umbral se suele fijar en 0,5 porque está en el centro, pero éste puede variar.
+
+- Si se pone a 0, todos slos valores serán 1 (el ratio de TP es el mismo que el de FP, es decir, 1).
+- Si se pone a 1, todos los valores serán 0 (el ratio de TP es el mismo que el de FP, es decir, 0).
+
+La variación de los puntos que probamos para conseguir todos los umbrales posibles, se llama curva **ROC** (Reciever Operating Characteristic curve).
+
+Una **curva ROC** (curva de característica operativa del recepto) es un gráfico que muestra el rendimiento de un modelo de clasificación en todos los umbrales de clasificación. Esta curva representa dos parámetros:
+
+- Tasa de verdaderos positivos (Exhaustividad)
+- Tasa de falsos positivos (FP / FP + TP)
+
+Los informes de clasificación y las matrices de confusión son excelentes métodos para evaluar cuantitativamente el rendimiento de los modelos, mientras que las curvas ROC proporcionan una forma de evaluar visualmente los modelos.
+
+Una curva ROC representa TPR frente a FPR.
+
+### 2.3.2 AUC
+
+Dada un curva ROC, debemos buscar la métrica que más nos interese.
+
+Para evaluar un modelo de regresión logística es ineficiente utilizar umbrales, por lo que se echa mano del algoritmo AUC (Area Under ROC Curve).
+
+### 2.3.3 Hyperparameter tuning
+
+Este tipo de parámetros se utilizan para evitar el over y underfittin (como alfa en Ridge y Lasso, o n en KNN vecinos).
+
+Se trata de un parámetro que no puede ser elegido antes de predecir el modelo y debe tener un valor correcto. Para ello, se deben probar varios valores, ajustarlos de forma separa y observar el rendimiento para quedarnos con el que mejor funcione. 
+- Utilizar la validación cruzada es esencial (cross validation).
+
+
+
+### 2.3.4 Evaluación final
+
+Es importante utilizar los datos de entrenamiento para poder llevar a cabo la cross validation. Si utilizo todos los datos de los que dispongo, no sería efectivo, puesto que estamos evaluando un modelo con datos que previamente ha visto.
+
+<br>
+<br>
+
+## 2.3 Árboles de decisión
+
+Se trata de secuencias de perguntas if else sobre características de carácter individual. 
+
+El objetivo es inferir las etiquetas de las clases.
+
+La diferencua principal con los modelos lineales, es que los árboles de decisión pueden capturar relaciones no liniales entre entidades características (features) y etiquetas (labels). No necesita estar en la misma escala que el resto de las variables.
+
+Cada pregunta if-else involucra una característica del dataset.
+
+### 2.3.1 Arquitectura
+Se trata de una estructura jerárquica con nodos, siendo éstos donde se realiza la pregunta if-else o la predeicción. 
+
+Tres tipos de nodos:
+- Raíz (Root)
+- Nodo interno
+- Hoja (Leaf)
+
+
+El árbol toma sus decisiones en función de la IG (Information Gain), que depende de forma intrínseca de la característica y de la "split point". Éstos crecen de manera recursiva, por lo que dependen del estado de sus predecesores.
+
+En cada nodo, el árbol se hace un pregunta involucrando una característica y un split point, que elegirá en función de la IG. 
+
+Existe una fórmula que mide la "impuridad" de un nodo: I(nodo), que puede calcularse echando mano de varios métodos.
+
+Si IG es 0, estamos ante una hoja (donde se lleva a cabo la decisión). Si nos encontramos en el nivel 2 de un árbol con profundidad 2, estamos de nuevo ante una hoja aunque no sea 0.
+
+### 2.3.2 Árbol de Decisión para regresión
+
+Las líneas de regresión no pueden capturar datos de modelos que incrementan o decrementan de forma lineal
+
+Una pieza clave para estudiar los árboles de precisión es el RMSE. El RMSE de un modelo mide, en promedio, cuánto difieren las predicciones del modelo de las etiquetas reales. El RMSE de un modelo puede obtenerse calculando la raíz cuadrada del error cuadrático medio (MSE) del modelo.
+
+
+<br>
+
+## 2.4 Random Forests
+
+Utilizan los árboles de decisión como base de predicción. Cada uno de los árboles de realiza una predicción y se juntan todas. A partir de éstas, se genera una predicción final
+
+Puede darse tanto en claseificación como en regresión.
+1. En Clasificación, se toma la mayoria de los promedios para asignar el valor a la predicción. RandomForestClassifier
+2. En Regresión, se toma el promedio de las predicciones para asignar el valor. RandomForestRegressor.
+
+La varianza obtenida es mucho menor.
+
+Parámetros interesantes: 
+
+        rf = RandomForestRegressor(n_estimators=400, min_samples_leaf=0.12,random_state=SEED)
+
+siendo n_estimators el número de árboles y min_samples_leaf que cada hoja tenga al menos un 0.12% de los datos empleados en el entrenamiento.
+
+<br>
+
+## 2.5 Errores de Generalización
+
+Nos encontramos ante estos errores cuando nuestro modelo no puede acercarse lo suficiente a realidad (f' diff de f). Esto puede ser por sobreajuste o subajuste.
+
+Podemos dividir este error entres partes.
+1. **Sesgo**: Nos dice cuánto difiere de media nuestra función resultante de la función legítima. Un modelo con un sesgo alto conlleva a subajuste (underfitting)
+2. **Varianza**: Nos dice cuanto de incoonsistente es nuestra función resultante sobre diferentes conjuntos de entrenamiento. Una alta varianza conslleva a overfitting.
+3. **Complejidad del Modelo**: Nos muestra la flexibilidad de nuestro modelo.
+
+El sesgo y la varianza son indirectamente proporcionales: cuando sube el otro baja. Hay que buscar el punto perfecto.
+
+La solución para evitar estos errores: cross-site validation (validación cruzada)
