@@ -265,3 +265,19 @@ Si IG es 0, estamos ante una hoja (donde se lleva a cabo la decisión). Si nos e
 Las líneas de regresión no pueden capturar datos de modelos que incrementan o decrementan de forma lineal
 
 Una pieza clave para estudiar los árboles de precisión es el RMSE. El RMSE de un modelo mide, en promedio, cuánto difieren las predicciones del modelo de las etiquetas reales. El RMSE de un modelo puede obtenerse calculando la raíz cuadrada del error cuadrático medio (MSE) del modelo.
+
+
+<br>
+
+## 2.4 Errores de Generalización
+
+Nos encontramos ante estos errores cuando nuestro modelo no puede acercarse lo suficiente a realidad (f' diff de f). Esto puede ser por sobreajuste o subajuste.
+
+Podemos dividir este error entres partes.
+1. **Sesgo**: Nos dice cuánto difiere de media nuestra función resultante de la función legítima. Un modelo con un sesgo alto conlleva a subajuste (underfitting)
+2. **Varianza**: Nos dice cuanto de incoonsistente es nuestra función resultante sobre diferentes conjuntos de entrenamiento. Una alta varianza conslleva a overfitting.
+3. **Complejidad del Modelo**: Nos muestra la flexibilidad de nuestro modelo.
+
+El sesgo y la varianza son indirectamente proporcionales: cuando sube el otro baja. Hay que buscar el punto perfecto.
+
+La solución para evitar estos errores: cross-site validation (validación cruzada):
