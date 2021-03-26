@@ -269,7 +269,25 @@ Una pieza clave para estudiar los árboles de precisión es el RMSE. El RMSE de 
 
 <br>
 
-## 2.4 Errores de Generalización
+## 2.4 Random Forests
+
+Utilizan los árboles de decisión como base de predicción. Cada uno de los árboles de realiza una predicción y se juntan todas. A partir de éstas, se genera una predicción final
+
+Puede darse tanto en claseificación como en regresión.
+1. En Clasificación, se toma la mayoria de los promedios para asignar el valor a la predicción. RandomForestClassifier
+2. En Regresión, se toma el promedio de las predicciones para asignar el valor. RandomForestRegressor.
+
+La varianza obtenida es mucho menor.
+
+Parámetros interesantes: 
+
+        rf = RandomForestRegressor(n_estimators=400, min_samples_leaf=0.12,random_state=SEED)
+
+siendo n_estimators el número de árboles y min_samples_leaf que cada hoja tenga al menos un 0.12% de los datos empleados en el entrenamiento.
+
+<br>
+
+## 2.5 Errores de Generalización
 
 Nos encontramos ante estos errores cuando nuestro modelo no puede acercarse lo suficiente a realidad (f' diff de f). Esto puede ser por sobreajuste o subajuste.
 
@@ -280,4 +298,4 @@ Podemos dividir este error entres partes.
 
 El sesgo y la varianza son indirectamente proporcionales: cuando sube el otro baja. Hay que buscar el punto perfecto.
 
-La solución para evitar estos errores: cross-site validation (validación cruzada):
+La solución para evitar estos errores: cross-site validation (validación cruzada)
