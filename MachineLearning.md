@@ -229,3 +229,36 @@ Se trata de un parámetro que no puede ser elegido antes de predecir el modelo y
 ### 2.3.4 Evaluación final
 
 Es importante utilizar los datos de entrenamiento para poder llevar a cabo la cross validation. Si utilizo todos los datos de los que dispongo, no sería efectivo, puesto que estamos evaluando un modelo con datos que previamente ha visto.
+
+<br>
+<br>
+
+## 2.3 Árboles de decisión
+
+Se trata de secuencias de perguntas if else sobre características de carácter individual. 
+
+El objetivo es inferir las etiquetas de las clases.
+
+La diferencua principal con los modelos lineales, es que los árboles de decisión pueden capturar relaciones no liniales entre entidades características (features) y etiquetas (labels). No necesita estar en la misma escala que el resto de las variables.
+
+Cada pregunta if-else involucra una característica del dataset.
+
+### 2.3.1 Arquitectura
+Se trata de una estructura jerárquica con nodos, siendo éstos donde se realiza la pregunta if-else o la predeicción. 
+
+Tres tipos de nodos:
+- Raíz (Root)
+- Nodo interno
+- Hoja (Leaf)
+
+
+El árbol toma sus decisiones en función de la IG (Information Gain), que depende de forma intrínseca de la característica y de la "split point". Éstos crecen de manera recursiva, por lo que dependen del estado de sus predecesores.
+
+En cada nodo, el árbol se hace un pregunta involucrando una característica y un split point, que elegirá en función de la IG. 
+
+Existe una fórmula que mide la "impuridad" de un nodo: I(nodo), que puede calcularse echando mano de varios métodos.
+
+Si IG es 0, estamos ante una hoja (donde se lleva a cabo la decisión). Si nos encontramos en el nivel 2 de un árbol con profundidad 2, estamos de nuevo ante una hoja aunque no sea 0.
+
+### 2.3.2 Árbol de Decisión para regresión
+
