@@ -262,3 +262,6 @@ Si IG es 0, estamos ante una hoja (donde se lleva a cabo la decisión). Si nos e
 
 ### 2.3.2 Árbol de Decisión para regresión
 
+Las líneas de regresión no pueden capturar datos de modelos que incrementan o decrementan de forma lineal
+
+Una pieza clave para estudiar los árboles de precisión es el RMSE. El RMSE de un modelo mide, en promedio, cuánto difieren las predicciones del modelo de las etiquetas reales. El RMSE de un modelo puede obtenerse calculando la raíz cuadrada del error cuadrático medio (MSE) del modelo.
